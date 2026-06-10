@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Setup AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="hero">
+        <h1>🏪 ShopSetup AI</h1>
+        <p class="tagline">Turn your shop into a digital business in 30 seconds</p>
+        <p class="subtagline">Generate Google Profile • Instagram Bio • WhatsApp Message • Visiting Card & More!</p>
+    </div>
+
+
+    <br>
+    <div class="input-area">
+        <textarea placeholder="Tell me about your business..."></textarea>
+
+        <!-- <p>E.g: My name is Raju. I run a shop called Sri Lakshmi Sarees in Vijayawada. We sell silk sarees, cotton sarees, kids wear and blouses. Open Monday to Saturday 9am to 9pm. Contact: 9876543210. Email: srilakshmi@gmail.com. We have 15 years experience."></p> !-->
+        <div class="controls">
+            <select id="category">
+                <option value="General Shop">General</option>
+                <option value="Restaurant/Food">Restaurant</option>
+                <option value="Clothing/Fashion">Clothing</option>
+                <option value="Medical/Pharmacy">Medical</option>
+                <option value="Grocery">Grocery</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Salon/Beauty">Salon</option>
+                <option value="Jewellery">Jewellery</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Education/Coaching">Education</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Stationery">Stationery</option>
+            </select>
+            
+            <select>
+                <option>English</option>
+                <option>Telugu</option>
+                <option>Hindi</option>
+            </select>  </div>
+            <button>Submit</button>
+        
+    </div>
+
+    <div id="loader" style="display:none">
+        <p>⏳ Generating your content...</p>
+    </div>
+
+    <div class="container">
+        <div class="section" id="s1">
+            <h3>Google Business Profile</h3>
+            <p id="s1-content"></p>
+            <button class="copy-btn" onclick="copyText('s1-content')">Copy</button>
+        </div>
+
+        <div class="section" id="s2">
+            <h3>Instagram Bio</h3>
+            <p id="s2-content"></p>
+            <button class="copy-btn" onclick="copyText('s2-content')">Copy</button>
+        </div>
+
+        <div class="section" id="s3">
+            <h3>Instagram Post Captions</h3>
+            <p id="s3-content"></p>
+            <button class="copy-btn" onclick="copyText('s3-content')">Copy</button>
+        </div>
+
+        <div class="section" id="s4">
+            <h3>Whatsapp Greeting</h3>
+            <p id="s4-content"></p>
+            <button class="copy-btn" onclick="copyText('s4-content')">Copy</button>
+        </div>
+
+        <div class="section" id="s5">
+            <h3>Visiting Card</h3>
+            <div id="visiting-card">
+                <div class="card-top">
+                    <h2 id="card-name">Shop Name</h2>
+                    <p id="card-tagline">Your tagline here</p>
+                </div>
+                <div class="card-divider"></div>
+                <div class="card-bottom">
+                    <p id="card-address">📍 Address</p>
+                    <p id="card-phone">📞 Phone</p>
+                    <p id="card-email">📧 Email</p>
+                    <p id="card-website">🌐 Website</p>
+                </div>
+            </div>
+            <button class="copy-btn" onclick="downloadCard()">⬇️ Download Card</button>
+        </div>
+
+        <div class="section" id="s6">
+            <h3>Festive Messages</h3>
+            <p id="s6-content"></p>
+            <button class="copy-btn" onclick="copyText('s6-content')">Copy</button>
+        </div>
+
+        <div class="section" id="s7">
+            <h3>Website Content</h3>
+            <p id="s7-content"></p>
+            <button class="copy-btn" onclick="copyText('s7-content')">Copy</button>
+        </div>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

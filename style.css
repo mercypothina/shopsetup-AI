@@ -1,0 +1,251 @@
+body{
+    background-color: lavender;
+    font-style: normal;
+    text-align: center;
+}
+
+.hero {
+    background: linear-gradient(135deg, #9416ee, #af56dc);
+    color: white;
+    padding: 20px 20px; /* reduced from 40px */
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 30px; /* reduced from 40px */
+    margin: 0;
+}
+
+.tagline {
+    font-size: 16px; /* reduced from 20px */
+    margin: 5px 0 3px 0;
+    font-weight: bold;
+}
+
+.subtagline {
+    font-size: 12px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.input-area {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 20px 2%;
+    flex-wrap: nowrap;
+}
+
+textarea {
+    flex: 3;
+    min-width: 0;
+    height: 80px;
+    border-radius: 10px;
+    font-size: 14px;
+    border: 2px solid rgb(171, 99, 237);
+    resize: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column !important;
+    gap: 5px;
+    min-width: 80px;
+    max-width: 100px;
+    flex-shrink: 0;
+}
+
+.controls select{
+    width:100%;
+    padding: 3px;
+    font-size: 10px;
+}
+
+.controls button{
+    width: 100%;
+    font-size: 12px;
+    padding: 5px;
+}
+
+button{
+    background-color: rgb(197, 146, 245);
+    border-radius: 10px;
+    padding: 10px;
+    border-color: rgb(171, 99, 237);
+    transition: 0.3s;
+}
+button:hover{
+    background-color: rgb(171, 99, 237);
+    transform: scale(0.95);
+}
+
+.container
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid;
+    border-color: rgb(171, 99, 237);
+    border-radius: 20px;
+    width: 250px;
+    height: 300px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: rgb(210, 175, 241);
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.5s ease;
+    opacity: 0;
+    transition: 0.3s;
+    overflow: hidden;
+}
+.section:hover{
+    transform: scale(1.1);
+    box-shadow: 5px 5px 15px grey;
+}
+.section p{
+    overflow-y: auto;
+    height: 80%;
+    text-align: left;
+    font-size: 12px;
+}
+
+.section.filled {
+    visibility: visible;
+    opacity: 1;
+}
+
+.copy-btn{
+    background-color: white;
+    color: purple;
+    border: 1px solid purple;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+#loader {
+    font-size: 20px;
+    margin: 20px;
+    color: purple;
+}
+
+/*#visiting-card {
+    background: linear-gradient(135deg, #4a0080, #9b30d0);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 10px 0;
+    width: 350px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+}*/
+
+#visiting-card {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #4a0080, #9b30d0);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.card-top {
+    text-align: left;
+}
+
+.card-top h2 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.card-top p {
+    font-size: 11px;
+    margin: 3px 0 0 0;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.card-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.4);
+    margin: 5px 0;
+}
+
+.card-bottom p {
+    font-size: 11px;
+    margin: 2px 0;
+    text-align: left;
+}
+
+
+@media (max-width: 768px) {
+    
+    .controls select {
+        width: 90px;
+        font-size: 11px;;
+    }
+    
+    .controls button {
+        width: 90px;
+        font-size: 11px;
+    }
+}
+
+.textarea-wrapper {
+    position: relative;
+    flex: 3;
+}
+
+.textarea-wrapper textarea {
+    width: 100%;
+}
+/*
+#mic-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #9b30d0;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#mic-btn.listening {
+    background: red;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
