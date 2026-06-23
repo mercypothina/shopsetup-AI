@@ -12,24 +12,12 @@ document.querySelector('button').addEventListener('click', async function () {
     document.querySelector('button').disabled = true;
     document.querySelector('button').innerText = 'Generating...';
 
-    try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + GROQ_API_KEY
-            },
-            body: JSON.stringify({
-                model: 'llama-3.3-70b-versatile',
-                max_tokens: 4000,
-                messages: [{
-                    role: 'user',
-                    content: `You are a business content generator for Indian shops.
+    const prompt = `You are a business content generator for Indian shops.
 Business: "${description}"
 Category: ${category}
 Language: ${language}
 
-Generate exactly these 7 sections with COMPLETE content. Use these exact headings:
+Generate exactly these 7 sections with COMPLETE content:
 
 SECTION1_START
 Write Google Business Profile description here (minimum 150 words)
@@ -62,9 +50,13 @@ SECTION6_END
 
 SECTION7_START
 Write complete one page website content with hero, about, services, contact
-SECTION7_END`
-                }]
-            })
+SECTION7_END`;
+
+    try {
+        const response = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ description, language, category, prompt })
         });
 
         const data = await response.json();
@@ -76,7 +68,6 @@ SECTION7_END`
 
         const aiResponse = data.choices[0].message.content;
 
-        // Extract each section
         function extract(text, num) {
             const regex = new RegExp(`SECTION${num}_START([\\s\\S]*?)SECTION${num}_END`);
             return text.match(regex)?.[1]?.trim() || '';
@@ -85,7 +76,6 @@ SECTION7_END`
         document.querySelector('#s1 p').innerText = extract(aiResponse, 1);
         document.querySelector('#s1').classList.add('filled');
 
-        // Small delay between each card appearing
         setTimeout(() => {
             document.querySelector('#s2 p').innerText = extract(aiResponse, 2);
             document.querySelector('#s2').classList.add('filled');
@@ -102,6 +92,14 @@ SECTION7_END`
         }, 900);
 
         setTimeout(() => {
+            const cardSection = extract(aiResponse, 5);
+            const getField = (field) => cardSection.match(new RegExp(field + ':\\s*(.+)'))?.[1]?.trim() || '';
+            document.getElementById('card-name').innerText = getField('SHOP_NAME') || description.split(' ').slice(0,3).join(' ');
+            document.getElementById('card-tagline').innerText = getField('TAGLINE') || 'Your trusted local shop';
+            document.getElementById('card-address').innerText = '📍 ' + (getField('ADDRESS') || 'Your Address');
+            document.getElementById('card-phone').innerText = '📞 ' + (getField('PHONE') || 'Phone Number');
+            document.getElementById('card-email').innerText = '📧 ' + (getField('EMAIL') || 'Email');
+            document.getElementById('card-website').innerText = '🌐 ' + (getField('WEBSITE') || 'Website');
             document.querySelector('#s5').classList.add('filled');
         }, 1200);
 
@@ -115,17 +113,6 @@ SECTION7_END`
             document.querySelector('#s7').classList.add('filled');
         }, 1800);
 
-        // Visiting card
-        const cardSection = extract(aiResponse, 5);
-        const getField = (field) => cardSection.match(new RegExp(field + ':\\s*(.+)'))?.[1]?.trim() || '';
-
-        document.getElementById('card-name').innerText = getField('SHOP_NAME') || description.split(' ').slice(0,3).join(' ');
-        document.getElementById('card-tagline').innerText = getField('TAGLINE') || 'Your trusted local shop';
-        document.getElementById('card-address').innerText = '📍 ' + (getField('ADDRESS') || 'Your Address');
-        document.getElementById('card-phone').innerText = '📞 ' + (getField('PHONE') || 'Phone Number');
-        document.getElementById('card-email').innerText = '📧 ' + (getField('EMAIL') || 'Email');
-        document.getElementById('card-website').innerText = '🌐 ' + (getField('WEBSITE') || 'Website');
-
     } catch (err) {
         alert('Something went wrong! Try again.');
         console.log(err);
@@ -137,16 +124,12 @@ SECTION7_END`
 });
 
 function downloadCard() {
-    const card = document.getElementById('visiting-card');
-    html2canvas(card, {
+    html2canvas(document.getElementById('visiting-card'), {
         scale: 3,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#4a0080',
-        logging: false,
-        onclone: function(clonedDoc) {
-            clonedDoc.getElementById('visiting-card').style.transform = 'none';
-        }
+        logging: false
     }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'visiting-card.png';
@@ -159,4 +142,37 @@ function copyText(id) {
     const text = document.getElementById(id).innerText;
     navigator.clipboard.writeText(text);
     alert('Copied!');
+}
+
+let recognition;
+
+function startListening() {
+    if(!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        alert('Use Chrome for voice input!');
+        return;
+    }
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-IN';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    const micBtn = document.getElementById('mic-btn');
+    micBtn.classList.add('listening');
+    micBtn.innerHTML = '⏹️';
+    micBtn.onclick = stopListening;
+    recognition.onresult = function(event) {
+        let transcript = '';
+        for(let i = 0; i < event.results.length; i++) {
+            transcript += event.results[i][0].transcript;
+        }
+        document.querySelector('textarea').value = transcript;
+    };
+    recognition.start();
+}
+
+function stopListening() {
+    recognition.stop();
+    const micBtn = document.getElementById('mic-btn');
+    micBtn.classList.remove('listening');
+    micBtn.innerHTML = '🎤';
+    micBtn.onclick = startListening;
 }
