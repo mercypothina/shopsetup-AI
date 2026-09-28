@@ -11,7 +11,8 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
             model: 'openai/gpt-oss-120b',
-            max_tokens: 4000,
+            max_tokens: 6000,
+            reasoning_effort: 'low',    
             messages: [{ role: 'user', content: prompt }]
         })
     });
